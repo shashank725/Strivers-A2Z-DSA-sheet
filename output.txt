@@ -1,13 +1,1 @@
-1 5 3 2 
-Size of arr: 4
-After sorting=1 2 3 5 
-Soring in desc order=5 3 2 1 
-num=3
-long long=18
-123
-132
-213
-231
-312
-321
-Max element of arr: 5
+20
