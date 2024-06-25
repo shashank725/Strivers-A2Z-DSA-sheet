@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Imp: a*b = lcm(a,b) * gcd(a,b)  
+
 int gcd(int a, int b){
 	while (a>0 && b)	
 	{
