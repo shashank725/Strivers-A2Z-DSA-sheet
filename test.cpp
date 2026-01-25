@@ -1,84 +1,107 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <unordered_set>
 using namespace std;
 
-// TC: O(N log(base 2) N)
+// Brute Force Approach
+// TC: O(N^2)
+// SC: O(1)
+int longestNonRepeatingSubstring(string &s) {
+    // Length of the input string
+    int n = s.size(); 
+    //Variable to store max length
+    int maxLen = 0;    
+    /* Iterate through all possible 
+    starting points of the substring*/
+    for (int i = 0; i < n; i++) {
+        /* Hash to track characters in 
+        the current substring window*/
+        // Assuming extended ASCII characters
+        vector<int> hash(256, 0);  
+        for (int j = i; j < n; j++) {
+            /* If s[j] is already in the
+            current substring window*/
+            if (hash[s[j]] == 1) break;  
+            /* Update the hash to mark s[j]
+            as present in the current window*/
+            hash[s[j]] = 1;
+            /* Calculate the length of
+            the current substring*/
+            int len = j - i + 1;
+            /* Update maxLen if the current
+            substring length is greater*/
+            maxLen = max(maxLen, len);
+        }
+    }
+    // Return the maximum length
+    return maxLen; 
+}
+
+
+// Better Approach
+// TC: O(2N)
 // SC: O(N)
-
-void merge(int arr[], int temp[], int low, int mid, int high){
-	// vector<int> temp; // temporary array
-    int left = low;      // starting index of left half of arr
-    int right = mid + 1;   // starting index of right half of arr
-	
-	int index = low;
-
-    //storing elements in the temporary array in a sorted manner//
-    while (left <= mid && right <= high) {
-        if (arr[left] <= arr[right]) {
-            // temp.push_back(arr[left]);
-            // left++;
-			temp[index++] = arr[left++];
+int longestNonRepeatingSubstring(string& s) {
+    int n = s.length();
+    if(n==0) return 0;
+    int ans = 0;
+    unordered_set<int> set;
+    int l=0;
+    for(int r=0;r<n;r++){
+        if(set.find(s[r]) != set.end()){
+            while(l<r && set.find(s[r]) != set.end()){
+                set.erase(s[l]);
+                l++;
+            }
         }
-        else {
-            // temp.push_back(arr[right]);
-            // right++;
-			temp[index++] = arr[right++];
+        set.insert(s[r]);
+        ans = max(ans, r-l+1);
+    }
+    return ans;
+}
 
+
+// Optimal Approach
+// TC: O(N)
+// SC: O(N)
+int longestNonRepeatingSubstring(string& s) {
+        int n = s.size();
+        // Assuming all ASCII characters
+        int HashLen = 256; 
+        /* Hash table to store last
+        occurrence of each character*/
+        vector<int> hash(HashLen, -1);  // int hash[HashLen];
+        int l = 0, r = 0, maxLen = 0;
+        while (r < n) {
+            /* If current character s[r] 
+            is already in the substring*/
+            if (hash[s[r]] != -1) {
+                /* Move left pointer to the right
+                of the last occurrence of s[r]*/
+                l = max(hash[s[r]] + 1, l);
+            }
+            // Calculate the current substring length
+            int len = r - l + 1;
+            // Update maximum length found so far
+            maxLen = max(len, maxLen);
+            /* Store the index of the current
+            character in the hash table*/
+            hash[s[r]] = r;
+            // Move right pointer to next position
+            r++;
         }
-	}
-    // if elements on the left half are still left //
-    while (left <= mid) {
-        // temp.push_back(arr[left]);
-        // left++;
-		temp[index++] = arr[left++];
-
+        // Return the maximum length found
+        return maxLen;
     }
-    //  if elements on the right half are still left //
-    while (right <= high) {
-        // temp.push_back(arr[right]);
-        // right++;
-		temp[index++] = arr[right++];
 
-    }
-    // transfering all elements from temporary to arr //
-    // for (int i = low; i <= high; i++) {
-    //     arr[i] = temp[i - low];
-    // }
-	for(int i=low;i<=high;i++){
-		arr[i] = temp[i];
-	}
-}
-
-void ms(int ar[], int temp[], int low, int high){
-	if (low == high) return;
-    int mid = (low + high) / 2 ;
-    ms(ar, temp, low, mid);  // left half
-    ms(ar, temp, mid + 1, high); // right half
-    merge(ar, temp, low, mid, high);  // merging sorted halves
-}
-
-void mergeSort(int arr[], int n){
-	int *temp = new int[n];
-	ms(arr, temp, 0, n-1);
-	delete[] temp;
-}
 
 int main() {
-	int n;
-	cin>>n;
-	int arr[n];
-	for(int i=0;i<n;i++){
-		cin>>arr[i];
-	}
-	for(auto it:arr){
-		cout<<it<<" ";
-	}
-	cout<<endl;
-	mergeSort(arr, n);
-	for(auto it:arr){
-		cout<<it<<" ";
-	}
-
-	return 0;
+    // Input array
+    vector<int> A = {4, 2, 2, 6, 4};
+    // Target xor
+    int B = 6;
+    cout << countSubarraysXOR(A, B) << endl;
+    cout << countSubarraysXOR2(A, B) << endl;
+    return 0;
 }
 
 
