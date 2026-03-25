@@ -1,108 +1,73 @@
 #include <iostream>
-#include <unordered_set>
+#include<unordered_set>
 using namespace std;
 
-// Brute Force Approach
-// TC: O(N^2)
-// SC: O(1)
-int longestNonRepeatingSubstring(string &s) {
-    // Length of the input string
-    int n = s.size(); 
-    //Variable to store max length
-    int maxLen = 0;    
-    /* Iterate through all possible 
-    starting points of the substring*/
-    for (int i = 0; i < n; i++) {
-        /* Hash to track characters in 
-        the current substring window*/
-        // Assuming extended ASCII characters
-        vector<int> hash(256, 0);  
-        for (int j = i; j < n; j++) {
-            /* If s[j] is already in the
-            current substring window*/
-            if (hash[s[j]] == 1) break;  
-            /* Update the hash to mark s[j]
-            as present in the current window*/
-            hash[s[j]] = 1;
-            /* Calculate the length of
-            the current substring*/
-            int len = j - i + 1;
-            /* Update maxLen if the current
-            substring length is greater*/
-            maxLen = max(maxLen, len);
-        }
+// Class representing a Node in a doubly linked list
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+void traverseLL(ListNode* head) {
+    ListNode* temp = head;
+    while(temp != nullptr) {
+        cout << temp->val << " ";
+        temp = temp->next;
     }
-    // Return the maximum length
-    return maxLen; 
+    cout << "\n";
 }
+
+
+
+// Brute Force Approach
+// TC: O(N)
+// SC: O(N)
+class Solution {
+public:
+    
+};
 
 
 // Better Approach
-// TC: O(2N)
+// TC: O(N + M)
 // SC: O(N)
-int longestNonRepeatingSubstring(string& s) {
-    int n = s.length();
-    if(n==0) return 0;
-    int ans = 0;
-    unordered_set<int> set;
-    int l=0;
-    for(int r=0;r<n;r++){
-        if(set.find(s[r]) != set.end()){
-            while(l<r && set.find(s[r]) != set.end()){
-                set.erase(s[l]);
-                l++;
-            }
-        }
-        set.insert(s[r]);
-        ans = max(ans, r-l+1);
-    }
-    return ans;
-}
+class Solution2 {
+public:
+    
+};
 
 
 // Optimal Approach
 // TC: O(N)
-// SC: O(N)
-int longestNonRepeatingSubstring(string& s) {
-        int n = s.size();
-        // Assuming all ASCII characters
-        int HashLen = 256; 
-        /* Hash table to store last
-        occurrence of each character*/
-        vector<int> hash(HashLen, -1);  // int hash[HashLen];
-        int l = 0, r = 0, maxLen = 0;
-        while (r < n) {
-            /* If current character s[r] 
-            is already in the substring*/
-            if (hash[s[r]] != -1) {
-                /* Move left pointer to the right
-                of the last occurrence of s[r]*/
-                l = max(hash[s[r]] + 1, l);
-            }
-            // Calculate the current substring length
-            int len = r - l + 1;
-            // Update maximum length found so far
-            maxLen = max(len, maxLen);
-            /* Store the index of the current
-            character in the hash table*/
-            hash[s[r]] = r;
-            // Move right pointer to next position
-            r++;
-        }
-        // Return the maximum length found
-        return maxLen;
+// SC: O(1)
+class Solution3 {
+public:
+    
+};
+
+
+
+// Driver code
+int main() {
+    ListNode* list = new ListNode(1);
+    list->next = new ListNode(3);
+    list->next->next = new ListNode(5);
+    list->next->next->next = new ListNode(9);
+    // Print the original linked list
+    traverseLL(list);
+    // Check if the linked list has a cycle
+    Solution sol;
+    if (sol.detectCycle(list)) {
+        cout << "The linked list has a cycle." << endl;
+    } else {
+        cout << "The linked list does not have a cycle." << endl;
     }
 
-
-int main() {
-    // Input array
-    vector<int> A = {4, 2, 2, 6, 4};
-    // Target xor
-    int B = 6;
-    cout << countSubarraysXOR(A, B) << endl;
-    cout << countSubarraysXOR2(A, B) << endl;
     return 0;
-}
+};
+
 
 
 

@@ -1,2 +1,6 @@
-4
-4
+Original linked list:
+5 -> 14
+10 -> 4
+12 -> 20 -> 13
+7 -> 17
+Flattened linked list: 5 7 10 4 12 14 17 20 13 
