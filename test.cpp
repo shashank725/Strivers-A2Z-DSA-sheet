@@ -1,41 +1,24 @@
 #include <iostream>
-#include<unordered_set>
+#include <unordered_set>
 using namespace std;
-
-// Class representing a Node in a doubly linked list
-struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
-void traverseLL(ListNode* head) {
-    ListNode* temp = head;
-    while(temp != nullptr) {
-        cout << temp->val << " ";
-        temp = temp->next;
-    }
-    cout << "\n";
-}
 
 
 
 // Brute Force Approach
 // TC: O(N)
-// SC: O(N)
+// SC: O(1)
 class Solution {
 public:
-    
+
 };
 
 
 // Better Approach
-// TC: O(N + M)
+// TC: O(3N)
 // SC: O(N)
 class Solution2 {
 public:
-    
+   
 };
 
 
@@ -51,22 +34,16 @@ public:
 
 // Driver code
 int main() {
-    ListNode* list = new ListNode(1);
-    list->next = new ListNode(3);
-    list->next->next = new ListNode(5);
-    list->next->next->next = new ListNode(9);
-    // Print the original linked list
-    traverseLL(list);
-    // Check if the linked list has a cycle
+    vector<int> nums = {0,0,1,1,1,2,2,3,3,4};
     Solution sol;
-    if (sol.detectCycle(list)) {
-        cout << "The linked list has a cycle." << endl;
-    } else {
-        cout << "The linked list does not have a cycle." << endl;
+    int k = sol.removeDuplicates(nums);
+    cout << "Unique count = " << k << "\n";
+    cout << "Array after removing duplicates: ";
+    for (int x = 0; x < k; x++) {
+        cout << nums[x] << " ";
     }
-
-    return 0;
-};
+    cout << endl;
+}
 
 
 
